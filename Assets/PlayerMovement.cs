@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate() 
     {
         Move();
-        Debug.Log(CheckForGround());
     }
 
     private void Move()
