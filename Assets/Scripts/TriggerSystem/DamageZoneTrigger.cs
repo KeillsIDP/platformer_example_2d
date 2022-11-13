@@ -39,6 +39,8 @@ public class DamageZoneTrigger : MonoBehaviour,ITrigger
             float damage = _damagePerSecond * Time.deltaTime;
             if (!_enteredCharacters.Contains(character))
                 timePassed += Time.deltaTime;
+            else if(timePassed>0)
+                yield break;
 
             character.DealDamage(damage, false);
             yield return new WaitForEndOfFrame();

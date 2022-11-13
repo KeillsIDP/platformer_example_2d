@@ -11,7 +11,7 @@ public class CharacterBase : MonoBehaviour
     private float _health;
     private bool _isInvulnerable;
 
-    private void Start()
+    private void Awake()
     {
         _health = _maxHealth;
     }
@@ -28,6 +28,8 @@ public class CharacterBase : MonoBehaviour
 
         StartCoroutine(InvulnerabilityCoroutine());
     }
+
+    public float GetHealth() => _health;
 
     private IEnumerator InvulnerabilityCoroutine()
     {
