@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-    private Animator _animator;
+    public static bool IsGrounded;
+
+    private static Animator _animator;
     private Rigidbody2D _rigidbody;
 
     private void Start()
@@ -15,21 +17,22 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Update()
     {
-        
+        _animator.SetFloat("AirSpeedY", _rigidbody.velocity.y);
+        _animator.SetBool("Grounded", IsGrounded);
     }
 
     public static void Idle()
     {
-
+        _animator.SetInteger("AnimState", 0);
     }
 
     public static void Walk()
     {
-
+        _animator.SetInteger("AnimState", 1);
     }
 
     public static void Jump()
     {
-
+        _animator.SetTrigger("Jump");
     }
 }

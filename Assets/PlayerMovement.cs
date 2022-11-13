@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _jumpForce;
     [SerializeField]
-    private Transform[] _groundPoints;
+    private Transform _groundPoint;
     [SerializeField]
     private LayerMask _ground;
 
@@ -36,6 +36,12 @@ public class PlayerMovement : MonoBehaviour
     {
         var inpX = Input.GetAxis("Horizontal");
 
+        if(inpX==0)
+        {
+            PlayerAnimationController.Idle();
+            return;
+        }
+
         if (inpX < 0)
             _spriteRenderer.flipX = true;
         else if (inpX > 0)
@@ -45,19 +51,22 @@ public class PlayerMovement : MonoBehaviour
         dir.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = dir;
+        PlayerAnimationController.Walk();
     }
 
-    private void Jump() => _rigidbody.velocity = new Vector2(_rigidbody.velocity.x,_jumpForce);
-    
+    private void Jump()
+    {
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+        PlayerAnimationController.Jump();
+    }
+
 
     private bool CheckForGround()
     {
-        //foreach (var point in _groundPoints)
-        //    if (Physics2D.Raycast(point.position, Vector2.down, 0.05f, _ground))
-        //        return true;
-        //return false;
+        bool res = Physics2D.BoxCast(_groundPoint.position, new Vector2(0.45f, 0.1f), 0, Vector2.down, .1f, _ground);
 
-        return Physics2D.BoxCast(_groundPoints[0].position, new Vector2(0.45f, 0.1f), 0, Vector2.down, 0, _ground);
+        PlayerAnimationController.IsGrounded = res;
+        return res;
     }
     
 }
