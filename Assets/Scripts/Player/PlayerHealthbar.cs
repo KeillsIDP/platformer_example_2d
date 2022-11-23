@@ -5,7 +5,6 @@ public class PlayerHealthbar : MonoBehaviour
 {
     [SerializeField]
     private Slider _bar;
-    
     private CharacterBase _character;
 
     private void Start()

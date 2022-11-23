@@ -13,9 +13,12 @@ public class DamageZoneTrigger : MonoBehaviour,ITrigger
     private GameObject _damageEffect;
     [SerializeField]
     private float _afterEffectTime;
+    [SerializeField]
+    private bool _stuns = false;
+    [SerializeField]
+    private bool _enableInvulnerability = false;
 
     private List<CharacterBase> _enteredCharacters = new List<CharacterBase>();
-
     public void Activate(GameObject obj)
     {
         var character = obj.GetComponent<CharacterBase>();
@@ -34,16 +37,30 @@ public class DamageZoneTrigger : MonoBehaviour,ITrigger
     private IEnumerator DamageCoroutine(CharacterBase character)
     {
         float timePassed = 0;
-        while(_enteredCharacters.Contains(character) || timePassed < _afterEffectTime)
+        GameObject vfx = null;
+        if (_damageEffect)
         {
-            float damage = _damagePerSecond * Time.deltaTime;
-            if (!_enteredCharacters.Contains(character))
-                timePassed += Time.deltaTime;
-            else if(timePassed>0)
-                yield break;
+            vfx = Instantiate(_damageEffect, character.transform);
+            vfx.transform.localPosition = new Vector2(0, .8f);
+        }
 
-            character.DealDamage(damage, false);
-            yield return new WaitForEndOfFrame();
+        while(_enteredCharacters.Contains(character)|| timePassed < _afterEffectTime)
+        {
+            if (!_enteredCharacters.Contains(character))
+                timePassed += .5f;
+            else if (timePassed > 0)
+                break;
+
+            character.DealDamage(_damagePerSecond/2, _enableInvulnerability, _stuns);
+            yield return new WaitForSeconds(.5f);
+        }
+
+        if (vfx != null)
+        {
+            foreach (var svfx in vfx.GetComponentsInChildren<ParticleSystem>())
+                svfx.Stop();
+
+            Destroy(vfx, 0.5f);
         }
     }
 }

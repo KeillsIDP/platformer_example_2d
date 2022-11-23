@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [HideInInspector]
+    public bool IsOnLadder;
     [SerializeField]
     private float _moveSpeed;
     [SerializeField]
@@ -22,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (CheckForGround() && Input.GetButtonDown("Jump"))
+        if ((IsOnLadder || CheckForGround()) && Input.GetButtonDown("Jump"))
             Jump();
     }
 
@@ -67,5 +69,4 @@ public class PlayerMovement : MonoBehaviour
         PlayerAnimationController.IsGrounded = res;
         return res;
     }
-    
 }
