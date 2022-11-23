@@ -1,9 +1,7 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -11,9 +9,14 @@ public class PlayerInventory : MonoBehaviour
     private GameObject _uiHolder;
     [SerializeField]
     private GameObject _iconPrefab;
+    [SerializeField]
+    private GameObject _itemDescription;
 
     private List<SOInventoryItem> _items = new List<SOInventoryItem>();
     private List<ItemUI> _ui = new List<ItemUI>();
+
+    private SOInventoryItem _choosenItem;
+    private bool _isDescriptionEnabled;
 
     private void Update()
     {
@@ -42,7 +45,13 @@ public class PlayerInventory : MonoBehaviour
 
         int index = _items.IndexOf(item);
 
-        Destroy(_ui[index]);
+        if (item == _choosenItem)
+        {
+            _choosenItem = null;
+            _isDescriptionEnabled = false;
+        }
+
+        Destroy(_ui[index].gameObject);
         _ui.RemoveAt(index);
 
         _items.Remove(item);
@@ -59,11 +68,38 @@ public class PlayerInventory : MonoBehaviour
         if (_items.Count < index + 1)
             return;
 
+        if (_choosenItem != _items[index])
+            _isDescriptionEnabled = false;
+
+        _choosenItem = _items[index];
+        if (!_isDescriptionEnabled)
+            StartCoroutine(ShowDescriptionCoroutine());
+        else
+            _isDescriptionEnabled = false;
+
         for (int i = 0; i < _items.Count; i++)
             if (i != index)
                 _ui[i].DeselectItem();
             else
                 _ui[i].SelectItem();
+    }
+
+    private IEnumerator ShowDescriptionCoroutine()
+    {
+        float timePassed = 0;
+        _isDescriptionEnabled = true;
+
+        _itemDescription.GetComponentInChildren<TextMeshProUGUI>().text = _choosenItem.Description;
+        _itemDescription.SetActive(true);
+
+        while (timePassed < 5 && _isDescriptionEnabled)
+        {
+            timePassed += Time.deltaTime;
+            yield return null;
+        }
+
+        _itemDescription.SetActive(false);
+        _isDescriptionEnabled = false;
     }
 
     public bool IsItemInInventory(SOInventoryItem item) => _items.Contains(item);

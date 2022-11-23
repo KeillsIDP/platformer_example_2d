@@ -14,3 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300206, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   ItemPrefab: {fileID: 4937583815873723102, guid: 90c61844ce86d654e8d238588c32ce62, type: 3}
+  Description: 'That''t some strange looking thing.
+
+    Red and maded from flash
+    of someone or something.
+
+    Maybe it''s used for some kind of ritual?'
+  Actions:
+    m_PersistentCalls:
+      m_Calls: []

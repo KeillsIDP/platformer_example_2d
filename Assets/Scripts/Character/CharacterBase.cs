@@ -27,6 +27,17 @@ public class CharacterBase : MonoBehaviour
         _stunCooldown += Time.deltaTime;
     }
 
+    public void Heal(float heal)
+    {
+        if (heal <= 0)
+            return;
+
+        _health += heal;
+
+        if (_health > _maxHealth)
+            _health = _maxHealth;
+    }
+
     public void DealDamage(float damage, bool useInvulnerability, bool stun)
     {
         if (damage <= 0 || (_isInvulnerable && useInvulnerability))

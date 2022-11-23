@@ -11,15 +11,15 @@ GameObject:
   - component: {fileID: 2036933400619018109}
   - component: {fileID: 2036933400619018108}
   - component: {fileID: 5690469363515097807}
-  - component: {fileID: 7791425321469168439}
-  - component: {fileID: 2200016616995186576}
-  m_Layer: 0
+  - component: {fileID: 956611755}
+  - component: {fileID: 956611756}
+  m_Layer: 7
   m_Name: HealthPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2036933400619018109
 Transform:
   m_ObjectHideFlags: 0
@@ -27,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036933400619018110}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -113,7 +113,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21875, y: 0.5625}
   m_EdgeRadius: 0
---- !u!114 &7791425321469168439
+--- !u!114 &956611755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036933400619018110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25464267798c33e49b00e428fe5a7188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healAmount: 50
+--- !u!114 &956611756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,19 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ddd89c316173845bcb5b056b95289c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactionEffectPrefab: {fileID: 6908019366598319941, guid: 9e8e732cadc072b42b0a41904f6ae90d, type: 3}
+  _interactionEffectPrefab: {fileID: 0}
   _interactions:
-  - {fileID: 2200016616995186576}
---- !u!114 &2200016616995186576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2036933400619018110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dfa3e233d9756d449a4e4053a880ccd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inventoryItem: {fileID: 11400000, guid: 0f94379b7a72fca4bbe9884e79c1de34, type: 2}
+  - {fileID: 956611755}
